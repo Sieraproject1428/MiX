@@ -22321,7 +22321,7 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6832
-    AegisName: Questioned_Parts
+    AegisName: Problematical_Part
     Name: Questioned Parts
     Type: Etc
     Buy: 10
@@ -35711,12 +35711,12 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25311
-    AegisName: Piece_of_Black_Horn
+    AegisName: PieceOfBlackSpirit
     Name: Piece of Black Horn
     Type: Etc
     Weight: 10
   - Id: 25312
-    AegisName: Fine_Old_Doll
+    AegisName: OldDoll
     Name: Fine Old Doll
     Type: Etc
     Weight: 10
@@ -40789,7 +40789,7 @@ Body:
          bonus bAspd,1;
       } }
   - Id: 27291
-    AegisName: Ancient_Tri_Joint_Card
+    AegisName: Ancient_Trijoint_Card
     Name: Ancient Tri Joint Card
     Type: Card
     Buy: 20
@@ -40802,7 +40802,7 @@ Body:
       bonus bBaseAtk,30;
       bonus bMaxHPrate,-1;
   - Id: 27292
-    AegisName: Ancient_Stalactic_Golem_Card
+    AegisName: Ancient_Sta_Golem_Card
     Name: Ancient Stalactic Golem Card
     Type: Card
     Buy: 20
@@ -40852,7 +40852,7 @@ Body:
       }
       bonus2 bIgnoreDefClassRate,Class_Boss,.@val;
   - Id: 27295
-    AegisName: Ancient_Stone_Shooter_Card
+    AegisName: Ancient_S_Shooter_Card
     Name: Ancient Stone Shooter Card
     Type: Card
     Buy: 20
@@ -40870,7 +40870,7 @@ Body:
       }
       bonus bCritAtkRate,.@crit;
   - Id: 27296
-    AegisName: Ancient_Wootan_Shooter_Card
+    AegisName: Ancient_W_Shooter_Card
     Name: Ancient Wootan Shooter Card
     Type: Card
     Buy: 20
@@ -40889,7 +40889,7 @@ Body:
          bonus bBaseAtk,40;
       } }
   - Id: 27297
-    AegisName: Ancient_Wootan_Fighter_Card
+    AegisName: Ancient_W_Fighter_Card
     Name: Ancient Wootan Fighter Card
     Type: Card
     Buy: 20
@@ -40902,7 +40902,7 @@ Body:
       bonus bCritical,5;
       bonus bCritAtkRate,10;
   - Id: 27298
-    AegisName: Ancient_Wootan_Defender_Card
+    AegisName: Ancient_W_Deffend_Card
     Name: Ancient Wootan Defender Card
     Type: Card
     Buy: 20
@@ -46196,7 +46196,7 @@ Body:
       bonus2 bAddEle,Ele_Ghost,40;
       bonus2 bAddEle,Ele_Undead,40;
   - Id: 300076
-    AegisName: Beta_Guards_Card
+    AegisName: Beta_Guards_Ng_Card
     Name: Broken Beta Guards Card
     Type: Card
     Weight: 10
@@ -46211,7 +46211,7 @@ Body:
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",10;
       bonus2 bSkillAtk,"LG_CANNONSPEAR",10;
   - Id: 300077
-    AegisName: Omega_Cleaner_Card
+    AegisName: O_Cleaner_Ng_Card
     Name: Broken Omega Cleaner Card
     Type: Card
     Weight: 10
@@ -46255,7 +46255,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Holy,30;
       bonus2 bMagicAddEle,Ele_Water,30;
   - Id: 300080
-    AegisName: Red_Pepper_H_Card
+    AegisName: Redpepper_H_Card
     Name: Senior Red Pepper Card
     Type: Card
     Weight: 10
@@ -46415,7 +46415,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MS_MAGNUM",25;
   - Id: 300090
-    AegisName: Verporte_Card
+    AegisName: Verporte_H_Card
     Name: Verporte Card
     Type: Card
     Weight: 10
@@ -46431,7 +46431,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Earth,10;
       }
   - Id: 300091
-    AegisName: MD_Papila_Card
+    AegisName: Papila_Card
     Name: Papila Card
     Type: Card
     Weight: 10
@@ -46448,7 +46448,7 @@ Body:
       bonus2 bSkillAtk,"GS_DESPERADO",10;
       bonus2 bSkillAtk,"GS_FULLBUSTER",10;
   - Id: 300092
-    AegisName: Papila_Ruba_H_Card
+    AegisName: Papila_H_Card
     Name: Senior Papila Card
     Type: Card
     Weight: 10
@@ -46463,7 +46463,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MC_CARTREVOLUTION",50;
   - Id: 300093
-    AegisName: MD_Papila_Ruba_Card
+    AegisName: Papila_Ruba_Card
     Name: Papila Ruba Card
     Type: Card
     Weight: 10
@@ -46478,7 +46478,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50;
   - Id: 300094
-    AegisName: MD_Papila_Ruba_H_Card
+    AegisName: Papila_Ruba_H_Card
     Name: Senior Papila Ruba Card
     Type: Card
     Weight: 10
@@ -46493,7 +46493,7 @@ Body:
       }
       bonus bCritAtkRate,2*(getrefine()/2);
   - Id: 300095
-    AegisName: MD_Papila_Cae_Card
+    AegisName: Papila_Cae_Card
     Name: Papila Cae Card
     Type: Card
     Weight: 10
@@ -46508,7 +46508,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AC_SHOWER",25;
   - Id: 300096
-    AegisName: MD_Papila_Cae_H_Card
+    AegisName: Papila_Cae_H_Card
     Name: Senior Papila Cae Card
     Type: Card
     Weight: 10

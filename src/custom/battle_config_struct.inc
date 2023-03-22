@@ -23,3 +23,7 @@ int ex_vending_report;
 int ex_buying_bound;
 int item_zeny;
 int item_cash;
+
+// Item ID for randdom @NULL#6385
+int item_1,item_2;
+

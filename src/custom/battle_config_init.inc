@@ -22,3 +22,7 @@
 { "ex_buying_bound",					&battle_config.ex_buying_bound,					1,		0,		1,				}, // [Easycore]
 { "item_zeny",							&battle_config.item_zeny,						0,		0,		INT32_MAX,		},
 { "item_cash",							&battle_config.item_cash,						0,		0,		INT32_MAX,		},
+
+// Item ID for randdom @NULL#6385
+{ "item_1",							&battle_config.item_1,						0,		0,		INT32_MAX,		},
+{ "item_2",							&battle_config.item_2,						0,		0,		INT32_MAX,		},

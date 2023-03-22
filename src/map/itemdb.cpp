@@ -180,15 +180,17 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			item->subtype = static_cast<e_ammo_type>(constant);
 		} else if (item->type == IT_CARD) {
-			std::string type_constant = "CARD_" + type;
+			item->subtype = CARD_NORMAL; // [Start]
+			/*std::string type_constant = "CARD_" + type;
 			int64 constant;
 
+			
 			if (!script_get_constant(type_constant.c_str(), &constant) || constant < CARD_NORMAL || constant >= MAX_CARD_TYPE) {
 				this->invalidWarning(node["SubType"], "Invalid card type %s, defaulting to CARD_NORMAL.\n", type.c_str());
 				item->subtype = CARD_NORMAL;
 			}
 
-			item->subtype = static_cast<e_card_type>(constant);
+			item->subtype = static_cast<e_card_type>(constant);*/
 		} else {
 			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
 			return 0;
@@ -565,7 +567,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->elvmax = MAX_LEVEL;
 	}
 
-	if (this->nodeExists(node, "Refineable")) {
+	if (this->nodeExists(node, "RefineableNoUse")) { // [Start]
 		bool refine;
 
 		if (!this->asBool(node, "Refineable", refine))
@@ -574,7 +576,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		item->flag.no_refine = !refine;
 	} else {
 		if (!exists)
-			item->flag.no_refine = true;
+			item->flag.no_refine = false; // [Start]
 	}
 
 	if (this->nodeExists(node, "Gradable")) {
@@ -872,7 +874,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->stack.guild_storage = false;
 		}
 	}
-	
+
 	if (this->nodeExists(node, "NoUse")) {
 		const auto& nouseNode = node["NoUse"];
 
@@ -911,8 +913,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (this->nodeExists(node, "Trade")) {
-		const auto& tradeNode = node["Trade"];
+	if (this->nodeExists(node, "TradeNoUse")) { // [Start]
+		const auto& tradeNode = node["TradeNoUse"];
 
 		if (this->nodeExists(tradeNode, "Override")) {
 			uint16 override;
@@ -1066,7 +1068,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		item->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
-		if (!exists) 
+		if (!exists)
 			item->script = nullptr;
 	}
 
@@ -1842,6 +1844,36 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	}else{
 		if( !exists ){
 			entry->resultRefineMaximum = 0;
+		}
+	}
+
+	if (this->nodeExists( node, "ResultRefineRate" )) {
+		const auto& refineNode = node["ResultRefineRate"];
+
+		for (const auto& refineit : refineNode) {
+			if (!this->nodesExist(refineit, { "Level", "Rate" })) {
+				return 0;
+			}
+
+			uint16 level;
+
+			if (!this->asUInt16Rate(refineit, "Level", level, MAX_REFINE))
+				return 0;
+
+			bool refine_exists = util::umap_find( entry->resultRefineRate, level ) != nullptr;
+
+			if (this->nodeExists( refineit, "Rate" )) {
+				uint16 rate;
+
+				if (!this->asUInt16Rate( refineit, "Rate", rate )) {
+					return 0;
+				}
+				entry->resultRefineRate[level] = rate;
+			} else {
+				if (!refine_exists) {
+					entry->resultRefineRate[level] = 1;
+				}
+			}
 		}
 	}
 
@@ -2971,7 +3003,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
 		}
 		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
+			intif_broadcast_obtain_special_item(sd, data->nameid, sd->opened_box_id, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -2992,7 +3024,14 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
+
+	if (group->announce_box_id != 0) {
+		sd->opened_box_id = group->announce_box_id;
+	}
+	else {
+		sd->opened_box_id = sd->itemid;
+	}
+
 	// Get all the 'must' item(s) (subgroup 0)
 	uint16 subgroup = 0;
 	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
@@ -3052,6 +3091,7 @@ const char* itemdb_typename(enum item_types type)
 		case IT_PETARMOR:       return "Pet Accessory";
 		case IT_AMMO:           return "Arrow/Ammunition";
 		case IT_DELAYCONSUME:   return "Delay-Consume Usable";
+		case IT_CHARM:			return "Charm";
 		case IT_SHADOWGEAR:     return "Shadow Equipment";
 		case IT_CASH:           return "Cash Usable";
 	}
@@ -3213,8 +3253,9 @@ char itemdb_isidentified(t_itemid nameid) {
 		case IT_WEAPON:
 		case IT_ARMOR:
 		case IT_PETARMOR:
+		case IT_CHARM:
 		case IT_SHADOWGEAR:
-			return 0;
+			return 1; // [Start]
 		default:
 			return 1;
 	}
@@ -3254,6 +3295,19 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!exists) {
 		group = std::make_shared<s_item_group_db>();
 		group->id = id;
+	}
+
+	if (this->nodeExists(node, "AnnounceBoxItemId")) {
+		t_itemid tmp_nameid;
+		if (!this->asUInt32(node, "AnnounceBoxItemId", tmp_nameid)) {
+			this->invalidWarning(node, "Invalid AnnounceBoxItemId node.\n");
+		}
+		if (!item_db.exists(tmp_nameid)) {
+			ShowWarning("ItemGroupDatabase::parseBodyNode: Box item `%u` does not exist. Ignoring.\n", tmp_nameid);
+		}
+		else {
+			group->announce_box_id = tmp_nameid;
+		}
 	}
 
 	if (this->nodeExists(node, "SubGroups")) {
@@ -4209,7 +4263,7 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
@@ -4684,18 +4738,18 @@ static void itemdb_read(void) {
 		"",
 		"/" DBIMPORT,
 	};
-	
+
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		item_db.load();
-	
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
+
 
 		if(i==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
@@ -4797,7 +4851,7 @@ void itemdb_reload(void) {
 		pc_setinventorydata(sd);
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
-		status_calc_pc(sd, SCO_FORCE); // 
+		status_calc_pc(sd, SCO_FORCE|SCO_ITEM_RELOAD); // 
 	}
 	mapit_free(iter);
 }
