@@ -1277,7 +1277,7 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 /// Extended Vending [Lilith] update version by ex0ample
-int clif_vend(struct map_session_data *sd, int skill_lv);
+int clif_vend(map_session_data *sd, int skill_lv);
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 

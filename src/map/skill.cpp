@@ -20355,7 +20355,7 @@ void skill_identify(map_session_data *sd, int idx)
 /**
 * Extended Vending system [Lilith] update version by ex0ample
 **/
-int skill_vending(struct map_session_data *sd, t_itemid nameid, int skill_lv) {
+int skill_vending(map_session_data *sd, t_itemid nameid, int skill_lv) {
 	nullpo_ret(sd);
 	std::shared_ptr<item_data> item;
 	char output[1024];

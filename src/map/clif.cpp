@@ -25279,7 +25279,7 @@ void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
 /**
 * Extended Vending system [Lilith] update version by ex0ample
 **/
-int clif_vend(struct map_session_data *sd, int skill_lv) {
+int clif_vend(map_session_data *sd, int skill_lv) {
 
 	nullpo_ret(sd);
 
