@@ -24,5 +24,9 @@ int ex_buying_bound;
 int item_zeny;
 int item_cash;
 
-int item_1,item_2;	// Item ID for the box [null]
-int imited_sale_price;	// limit the sale value of all [null]
+// Item ID for the box [null]
+int item_1,item_2;
+
+// limit the sale value of all [null]
+int imited_sale_price;
+

@@ -147,3 +147,4 @@ Thumbs.db
 
 # generated files
 generated
+src/custom/battle_config_struct.inc
