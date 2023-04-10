@@ -12,7 +12,6 @@
  *	 <datatype> name;
  **/
 
-
 /**
 * Extended Vending system [Lilith]
 **/
@@ -30,3 +29,4 @@ int item_1,item_2;
 
 // limit the sale value of all [null]
 int imited_sale_price;
+
