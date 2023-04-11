@@ -153,7 +153,7 @@ prontera,114,77,6	duplicate(Dolangmal)	Dolangmal#1	553
 geffen,109,61,6	duplicate(Dolangmal)	Dolangmal#2	553
 payon,200,106,4	duplicate(Dolangmal)	Dolangmal#3	553
 aldebaran,170,104,4	duplicate(Dolangmal)	Dolangmal#4	553
-morocc,168,275,4	duplicate(Dolangmal)	Dolangmal#5	553
+//morocc,168,275,4	duplicate(Dolangmal)	Dolangmal#5	553
 yuno,165,122,4	duplicate(Dolangmal)	Dolangmal#6	553
 rachel,121,126,4	duplicate(Dolangmal)	Dolangmal#7	553
 lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	553

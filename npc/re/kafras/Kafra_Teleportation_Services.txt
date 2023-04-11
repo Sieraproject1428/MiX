@@ -315,11 +315,11 @@ geffen,115,66,5	script	Kafra Teleportation#geffen	4_F_DRKAFRA01,{
 lighthalzen,167,103,5	script	Kafra Teleportation#lighthalzen	4_F_DRKAFRA01,{
 	callfunc "F_KafTeleDoram",5;
 }
-
+/*
 morocc,155,257,6	script	Kafra Teleportation#morocc	4_F_DRKAFRA01,{
 	callfunc "F_KafTeleDoram",6;
 }
-
+*/
 payon,176,104,5	script	Kafra Teleportation#payon	4_F_DRKAFRA01,{
 	callfunc "F_KafTeleDoram",7;
 }

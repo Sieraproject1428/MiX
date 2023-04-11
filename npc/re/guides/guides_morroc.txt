@@ -14,7 +14,7 @@
 //= 1.1 Fixed and optimized. [Euphy]
 //= 1.2 Navigation system update. [Euphy]
 //============================================================ 
-
+/*
 morocc,153,286,6	script	Guide#01morocc::GuideMorocc	707,{
 	cutin "moc_soldier",2;
 	mes "[Morocc Guide]";
@@ -166,7 +166,7 @@ L_Mark:
 morocc,154,38,6	duplicate(GuideMorocc)	Guide#02morocc	707
 morocc,296,213,4	duplicate(GuideMorocc)	Guide#03morocc	707
 morocc,28,170,5	duplicate(GuideMorocc)	Guide#04morocc	707
-
+*/
 moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 	cutin "moc_soldier",2;
 	mes "[Morocc Guide]";

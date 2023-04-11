@@ -1347,7 +1347,7 @@ manuk,274,146,6	duplicate(Warper)	Warper#man	811
 mid_camp,216,288,4	duplicate(Warper)	Warper#mid	811
 mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	811
 moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	811
-morocc,159,97,4	duplicate(Warper)	Warper#mor	811
+//morocc,159,97,4	duplicate(Warper)	Warper#mor	811
 moscovia,229,191,4	duplicate(Warper)	Warper#mos	811
 nameless_n,259,213,4	duplicate(Warper)	Warper#nam	811
 niflheim,205,179,4	duplicate(Warper)	Warper#nif	811

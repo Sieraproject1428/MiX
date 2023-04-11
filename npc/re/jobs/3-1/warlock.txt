@@ -70,7 +70,7 @@ OnTouch_:
 	end;
 }
 //morocc,103,144,0	duplicate(#distorted_space_)	#distorted_space_1	139,1,1
-morocc,95,132,0	duplicate(#distorted_space_)	#distorted_space_1	139,1,1
+//morocc,95,132,0	duplicate(#distorted_space_)	#distorted_space_1	139,1,1
 splendide,141,284,0	duplicate(#distorted_space_)	#distorted_space_2	139,1,1
 
 function	script	F_Warlock	{

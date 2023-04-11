@@ -232,26 +232,26 @@ yuno,332,108,3	duplicate(idRO_rental)	Rental Shop#yun-2	874
 // Morocc
 //============================================================
 // Center
-morocc,154,97,3	duplicate(idRO_kafra)	Kafra Shop#moc-1	721
-morocc,153,97,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-1	80
-morocc,151,97,3	duplicate(idRO_rental)	Rental Shop#moc-1	874
+//morocc,154,97,3	duplicate(idRO_kafra)	Kafra Shop#moc-1	721
+//morocc,153,97,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-1	80
+//morocc,151,97,3	duplicate(idRO_rental)	Rental Shop#moc-1	874
 
 // Top
-morocc,163,258,3	duplicate(idRO_kafra)	Kafra Shop#moc-2	721
-morocc,162,258,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-2	80
-morocc,165,258,3	duplicate(idRO_rental)	Rental Shop#moc-2	874
-
-morocc,167,261,3	duplicate(idRO_kafra)	Kafra Shop#moc	721
-morocc,167,263,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc	80
-morocc,155,261,3	duplicate(idRO_cons)	Consumable#moc	721
-morocc,155,263,3	duplicate(idRO_cons2)	Consumable 2#moc	80
-morocc,158,261,3	duplicate(idRO_gear)	Headgear#moc	721
-morocc,158,263,3	duplicate(idRO_gear2)	Headgear 2#moc	80
-morocc,161,261,3	duplicate(idRO_eq)	Equipment#moc	721
-morocc,161,263,3	duplicate(idRO_eq2)	Equipment 2#moc	80
-morocc,164,261,3	duplicate(idRO_acc)	Acc and Kartu#moc	721
-morocc,164,263,3	duplicate(idRO_acc2)	Acc and Kartu 2#moc	80
-morocc,152,261,3	duplicate(idRO_rental)	Rental Shop#moc	874
+//morocc,163,258,3	duplicate(idRO_kafra)	Kafra Shop#moc-2	721
+//morocc,162,258,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-2	80
+//morocc,165,258,3	duplicate(idRO_rental)	Rental Shop#moc-2	874
+//
+//morocc,167,261,3	duplicate(idRO_kafra)	Kafra Shop#moc	721
+//morocc,167,263,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc	80
+//morocc,155,261,3	duplicate(idRO_cons)	Consumable#moc	721
+//morocc,155,263,3	duplicate(idRO_cons2)	Consumable 2#moc	80
+//morocc,158,261,3	duplicate(idRO_gear)	Headgear#moc	721
+//morocc,158,263,3	duplicate(idRO_gear2)	Headgear 2#moc	80
+//morocc,161,261,3	duplicate(idRO_eq)	Equipment#moc	721
+//morocc,161,263,3	duplicate(idRO_eq2)	Equipment 2#moc	80
+//morocc,164,261,3	duplicate(idRO_acc)	Acc and Kartu#moc	721
+//morocc,164,263,3	duplicate(idRO_acc2)	Acc and Kartu 2#moc	80
+//morocc,152,261,3	duplicate(idRO_rental)	Rental Shop#moc	874
 
 // Kunlun
 //============================================================
