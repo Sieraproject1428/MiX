@@ -49294,7 +49294,6 @@ Body:
             Rate: 400
           - Item: Critical_Stone_Bottom
             Rate: 400
-###  feature/kachua  ###
   - Group: AEGIS_101920
     SubGroups:
       - SubGroup: 1

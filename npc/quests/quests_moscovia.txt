@@ -8811,7 +8811,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	mes "Let me know somewhere.";
 	close;
 }
-
+/*
 //----------------------------------------------------------------------------
 // Morocc Villager (Lusalka's Hair)
 //----------------------------------------------------------------------------
@@ -9024,7 +9024,7 @@ moc_pryd04,126,120,0	script	Soldier#rus26	4_M_RUSMAN1,{
 	mes "- He looks down at the golden earrings and rubs it carefully -";
 	close;
 }
-
+*/
 //----------------------------------------------------------------------------
 // Marozka's Dungeon (Golden Thread)
 //----------------------------------------------------------------------------

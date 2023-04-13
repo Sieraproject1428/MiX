@@ -8268,13 +8268,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TR_MYSTIC_SYMPHONY:
 	case TR_KVASIR_SONATA:
 	case EM_SPELL_ENCHANTING:
-	case NPC_DAMAGE_HEAL:
-	case NPC_RELIEVE_ON:
-	case NPC_RELIEVE_OFF:
 	case SKE_ENCHANTING_SKY:
 	case HN_BREAKINGLIMIT:
 	case HN_RULEBREAK:
 	case SH_TEMPORARY_COMMUNION:
+	case NPC_RELIEVE_ON:
+	case NPC_RELIEVE_OFF:
+	case NPC_DAMAGE_HEAL:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -8283,12 +8283,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		sc_start2(src,bl,SC_KYRIE,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv));
 		break;
-
 	case NPC_GRADUAL_GRAVITY:
-		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID | SCSTART_NOTICKDEF | SCSTART_NORATEDEF);
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		break;
-
 	case NPC_ALL_STAT_DOWN: 
 		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
@@ -8498,7 +8496,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_ANTIMAGIC:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start2(src,bl,type,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv)));
-		break;
+		break;/* #7024
+	case NPC_MOVE_COORDINATE:
+		if (src != bl) {
+			int x = src->x, y = src->y;
+			if (unit_movepos(src,bl->x,bl->y,0,0)) {
+				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+				clif_blown(src);
+				if (unit_movepos(bl,x,y,0,0)) {
+					clif_skill_nodamage(bl,bl,skill_id,skill_lv,1);
+					clif_blown(bl);
+				}
+				map_foreachinallrange(unit_changetarget,src,AREA_SIZE,BL_MOB,bl,src);
+			}
+		}
+		break;*/
 	case HLIF_AVOID:
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
@@ -9595,6 +9607,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->state.prevend = 1;
 				sd->state.workinprogress = WIP_DISABLE_ALL;
 				sd->vend_skill_lv = skill_lv;
+				sd->vend_item = 0;
 				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
 				if (i < MAX_CART) {
 					// Save the cart before opening the vending UI
@@ -9604,7 +9617,42 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else{
 					// Instantly open the vending UI
 					sd->state.pending_vending_ui = false;
-					clif_openvendingreq(sd,2+skill_lv);
+				{
+					if (battle_config.extended_vending) {
+						std::shared_ptr<item_data> item;
+						char output[CHAT_SIZE_MAX];
+						int c = 0, d = 0;
+
+						if (battle_config.item_zeny)
+							d++;
+						if (battle_config.item_cash)
+							d++;
+						for (const auto &it : itemdb_vending) {
+							if ((item = item_db.find(it.first)) != nullptr && item->nameid != ITEMID_ZENY && item->nameid != ITEMID_CASH){
+								c++;
+							}
+						}
+
+						c += d;
+
+						if (c > 1) {
+							clif_vend(sd, skill_lv);
+							break;
+						}
+
+						if (c){
+							item = item_db.find(battle_config.item_zeny ? battle_config.item_zeny : battle_config.item_cash ? battle_config.item_cash : item->nameid);
+							sd->vend_item = item->nameid;
+							sprintf(output, msg_txt(sd, 1596), itemdb_name(sd->vend_item));
+							clif_messagecolor(&sd->bl, color_table[COLOR_CYAN], output, false, SELF);
+						} else {
+							sd->vend_item = 0;
+						}
+						clif_openvendingreq(sd, 2 + skill_lv);
+					} else {
+						clif_openvendingreq(sd, 2 + skill_lv);
+					}
+				}
 				}
 			}
 		}
@@ -14205,9 +14253,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		case LG_EARTHDRIVE:
 		case SC_ESCAPE:
 		case SU_CN_METEOR:
-		case NPC_RAINOFMETEOR:
 		case NW_GRENADES_DROPPING:
 		case HN_METEOR_STORM_BUSTER:
+		case NPC_RAINOFMETEOR:
 			break; //Effect is displayed on respective switch case.
 		default:
 			if(skill_get_inf(skill_id)&INF_SELF_SKILL)
@@ -15302,7 +15350,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		break;
-
+ 
 	case NPC_RAINOFMETEOR:
 		{
 			int area = skill_get_splash(skill_id, skill_lv);
@@ -20332,6 +20380,29 @@ void skill_identify(map_session_data *sd, int idx)
 	clif_item_identified(sd,idx,flag);
 }
 
+/**
+* Extended Vending system [Lilith] update version by ex0ample
+**/
+int skill_vending(map_session_data *sd, t_itemid nameid, int skill_lv) {
+	nullpo_ret(sd);
+	std::shared_ptr<item_data> item;
+	char output[1024];
+
+	if (!pc_can_give_items(sd) || (item = item_db.find(nameid)) == nullptr) {
+		sd->state.prevend = 0;
+		sd->vend_item = 0;
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+	} else {
+		sd->vend_item = nameid;
+		sd->state.prevend = 1;
+		clif_openvendingreq(sd, 2 + skill_lv);
+		sprintf(output, msg_txt(sd, 1594), item->ename.c_str());
+		clif_messagecolor(&sd->bl, color_table[COLOR_CYAN], output, false, SELF);
+	}
+	return 0;
+}
+
 /*==========================================
  * Weapon Refine [Celest]
  *------------------------------------------*/
@@ -22125,8 +22196,8 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 			default:
 				if (group->val2 == 1 && (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
-					group->skill_id == NPC_RAINOFMETEOR || group->skill_id == HN_METEOR_STORM_BUSTER)) {
+					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || 
+					group->skill_id == HN_METEOR_STORM_BUSTER ||  group->skill_id == NPC_RAINOFMETEOR)) {
 					// Deal damage before expiration
 					break;
 				}
@@ -22183,7 +22254,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			default:
 				if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
 					group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
-					group->skill_id == NPC_RAINOFMETEOR || group->skill_id == HN_METEOR_STORM_BUSTER ) {
+					group->skill_id == HN_METEOR_STORM_BUSTER || group->skill_id == NPC_RAINOFMETEOR) {
 					if (group->val2 == 0 && (DIFF_TICK(tick, group->tick) >= group->limit - group->interval || DIFF_TICK(tick, group->tick) >= unit->limit - group->interval)) {
 						// Unit will expire the next interval, start dropping Meteor
 						block_list *src = map_id2bl(group->src_id);
@@ -22225,7 +22296,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 		}
 		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
 			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
-			group->skill_id == NPC_RAINOFMETEOR ||group->skill_id == HN_METEOR_STORM_BUSTER ||
+			group->skill_id == HN_METEOR_STORM_BUSTER || group->skill_id == NPC_RAINOFMETEOR ||
 			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
 			skill_delunit(unit);
 			return 0;

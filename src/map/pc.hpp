@@ -736,6 +736,7 @@ public:
 	int vender_id;
 	int vend_num;
 	uint16 vend_skill_lv;
+	t_itemid vend_item; ///Extended Vending system [Lilith] update version by ex0ample
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 
@@ -943,8 +944,10 @@ public:
 	} captcha_upload;
 
 	s_macro_detect macro_detect;
+
 	std::vector<uint32> party_booking_requests;
 	int goldpc_tid;
+
 	// The last item the player used before getgroupitem script command is called. Used in broadcast packet only
 	t_itemid opened_box_id;
 };
