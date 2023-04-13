@@ -932,8 +932,6 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 	clif_send( &p, sizeof(p), &fitem->bl, AREA );
 }
 
-
-
 /// Makes an item disappear from the ground.
 /// 00a1 <id>.L (ZC_ITEM_DISAPPEAR)
 void clif_clearflooritem(struct flooritem_data *fitem, int fd)

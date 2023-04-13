@@ -11,13 +11,6 @@
  *	 { "name", &battle_config.<variable name>, <default value>, <minimum value>, <maximum value> },
  **/
 
-	// item the box mobs drop all
-	{ "item_the_box",					&battle_config.item_the_box,				0,			0,			1,	},
-	{ "item_1",							&battle_config.item_1,						500,		500,		INT_MAX,	},
-	{ "item_2",							&battle_config.item_2,						500,		500,		INT_MAX,	},
-	// limit the sale value of all [null]
-	{ "limit_sale_price",				&battle_config.limit_sale_price,			0,			0,			INT_MAX,	},
-
 /**
 * Extended Vending system [Lilith]
 **/
@@ -29,3 +22,10 @@
 { "ex_buying_bound",					&battle_config.ex_buying_bound,					1,		0,		1,				}, // [Easycore]
 { "item_zeny",							&battle_config.item_zeny,						0,		0,		INT32_MAX,		},
 { "item_cash",							&battle_config.item_cash,						0,		0,		INT32_MAX,		},
+
+// Item ID for the box [null]
+{ "item_1",								&battle_config.item_1,							0,		0,		INT32_MAX,		},
+{ "item_2",								&battle_config.item_2,							0,		0,		INT32_MAX,		},
+
+// limit the sale value of all [null]
+{ "imited_sale_price",					&battle_config.imited_sale_price,				0,      0,      INT_MAX,        },

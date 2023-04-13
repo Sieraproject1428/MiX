@@ -48,7 +48,6 @@ extern uint16 GetUShort(const unsigned char* buf);
 extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
-std::string InsertComma(int v);
 
 std::string InsertComma(int v);
 
