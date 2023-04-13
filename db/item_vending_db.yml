@@ -11,7 +11,8 @@ Header:
   Version: 1
 
 Body:
- - Item: TCG_Card
- - Item: Mithril_Coin
- - Item: Silver_Coin
- - Item: Copper_Coin
+ - Item: 17Carat_Dia
+# - Item: TCG_Card
+# - Item: Mithril_Coin
+# - Item: Silver_Coin
+# - Item: Copper_Coin

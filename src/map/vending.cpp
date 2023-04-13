@@ -185,6 +185,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 			vend_list[i] = j;
 
 		z += ((double)vsd->vending[j].value * (double)amount);
+
 		/**
 		* Extended Vending system [Lilith] update version by ex0ample
 		**/
@@ -761,7 +762,6 @@ void do_init_vending_autotrade(void)
 				Sql_GetData(mmysql_handle, 6, &data, NULL); at->head_dir = atoi(data);
 				Sql_GetData(mmysql_handle, 7, &data, NULL); at->sit = atoi(data);
 				Sql_GetData(mmysql_handle, 8, &data, NULL); at->vend_item = strtoul(data, nullptr, 10);		// Extended Vending system [Lilith] update version by ex0ample
- 				
 				at->count = 0;
 
 				if (battle_config.feature_autotrade_direction >= 0)
@@ -770,6 +770,7 @@ void do_init_vending_autotrade(void)
 					at->head_dir = battle_config.feature_autotrade_head_direction;
 				if (battle_config.feature_autotrade_sit >= 0)
 					at->sit = battle_config.feature_autotrade_sit;
+
 				// Extended Vending system [Lilith] update version by ex0ample
 				if (!battle_config.extended_vending)
 					at->vend_item = 0;

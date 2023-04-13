@@ -10,7 +10,6 @@
 #include <common/socket.hpp> //wfifo session
 #include <common/strlib.hpp> //safeprint
 #include <common/timer.hpp> //difftick
-#include <common/utils.hpp>
 
 #include "account.hpp"
 #include "login.hpp"
@@ -183,9 +182,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
 			isvip = true;
-			if (char_slots < MAX_CHARS) {
-				char_slots = cap_value(char_slots + char_vip, MIN_CHARS, MAX_CHARS);
-			}
+			char_slots += char_vip;
 		}
 #endif
 	}
@@ -686,9 +683,6 @@ int logchrif_parse_reqvipdata(int fd) {
 			if( now < vip_time ) { //isvip
 				if(acc.group_id != login_config.vip_sys.group){ //only upd this if we're not vip already
 					acc.old_group = acc.group_id;
-					if( acc.char_slots == 0 ){
-						acc.char_slots = MIN_CHARS;
-					}
 					acc.char_slots += login_config.vip_sys.char_increase;
 				}
 				acc.group_id = login_config.vip_sys.group;

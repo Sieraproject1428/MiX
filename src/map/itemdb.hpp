@@ -1834,6 +1834,8 @@ enum e_random_item_group {
 	IG_CLASS_SHADOW_PD_CUBE,
 	IG_CLASS_SHADOW_EA_CUBE,
 	IG_ENCHANT_STONE_BOX30,
+
+	// feature/kachua
 	IG_AEGIS_101920,
 	IG_AEGIS_101921,
 	IG_AEGIS_101923,
@@ -2372,6 +2374,7 @@ public:
 extern ItemPackageDatabase item_package_db;
 
 uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
+
 /**
 * Extended Vending system [Lilith] update version by ex0ample
 **/
